@@ -1,0 +1,38 @@
+{
+  "name": "trace-scrub",
+  "version": "0.1.0",
+  "description": "Find (and redact) API keys and tokens that leaked into Claude Code / Codex / Gemini CLI / OpenCode transcripts, gateway logs and agent memory folders. Offline, never prints values.",
+  "type": "module",
+  "bin": {
+    "trace-scrub": "bin/trace-scrub.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/scan.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "secrets",
+    "secret-scanning",
+    "redaction",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "opencode",
+    "llm-gateway",
+    "litellm",
+    "security"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinx-pro/trace-scrub.git"
+  }
+}

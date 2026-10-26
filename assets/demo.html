@@ -1,0 +1,63 @@
+<!doctype html><meta charset="utf-8"><style>
+body{margin:0;background:#0d1117}
+.win{margin:24px;border-radius:10px;background:#161b22;box-shadow:0 8px 30px rgba(0,0,0,.5);overflow:hidden;width:max-content}
+.bar{height:30px;background:#21262d;display:flex;align-items:center;padding-left:12px;gap:8px}
+.bar i{width:12px;height:12px;border-radius:50%;display:inline-block}
+pre{margin:0;padding:16px 20px 20px;color:#e6edf3;font:13px/1.5 "SF Mono",Menlo,Consolas,monospace;white-space:pre}
+</style><div class="win"><div class="bar"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div><pre><span style="color:#8b949e">$ npx github:thinx-pro/trace-scrub --path ~/gateway      # demo home with fake tokens</span>
+<span style="font-weight:700">trace-scrub</span> <span style="opacity:.55">0.1.0</span> <span style="opacity:.55">— secrets that leaked into agent transcripts &amp; logs (values are never printed)</span>
+
+  <span style="font-weight:700">SOURCE</span>       <span style="font-weight:700">WHAT</span>             <span style="font-weight:700">FILES</span>    <span style="font-weight:700">SIZE</span>  <span style="font-weight:700">RESULT</span>
+  Claude Code  sessions         4 files  2 KB  <span style="color:#ff6b6b">3 with secrets</span>
+  Claude Code  prompt history   1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+  Claude Code  shell snapshots  1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+  Codex        sessions         1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+  Codex        logs (sqlite)    1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+  Gemini CLI   sessions         1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+  custom       ~/gateway        1 file   1 KB  <span style="color:#ff6b6b">1 with secrets</span>
+
+<span style="font-weight:700">  11 distinct secrets</span> in 9 files (13 occurrences), <span style="color:#ff6b6b"><span style="font-weight:700">2 still configured on this machine</span></span>
+
+  <span style="font-weight:700">SEV</span>   <span style="font-weight:700">TYPE</span>                                <span style="font-weight:700">VALUE</span>                         <span style="font-weight:700">FOUND IN</span>            <span style="font-weight:700">FILES</span>  <span style="font-weight:700">OCC</span>  <span style="font-weight:700">LAST SEEN</span>   <span style="font-weight:700">STATUS</span>
+  <span style="color:#ff6b6b">HIGH</span>  GitHub OAuth token (gh CLI)         <span style="color:#9aedfe">gho_…fvQg</span>                     Claude Code, Codex  2      3    2026-10-25  <span style="color:#ff6b6b">LIVE (hosts.yml)</span>
+  <span style="color:#f3f99d">MED </span>  OpenAI API key                      <span style="color:#9aedfe">sk-proj-…oYG4</span>                 Claude Code         1      1    2026-10-17  <span style="color:#ff6b6b">LIVE (auth.json)</span>
+  <span style="color:#ff6b6b">HIGH</span>  Private key block                   <span style="color:#9aedfe">OPENSSH key block, 244 chars</span>  Claude Code         1      1    2026-10-06  <span style="opacity:.55">not in current config</span>
+  <span style="color:#ff6b6b">HIGH</span>  npm token                           <span style="color:#9aedfe">npm_…57qU</span>                     Codex               1      1    2026-10-25  <span style="opacity:.55">not in current config</span>
+  <span style="color:#ff6b6b">HIGH</span>  GitHub personal access token        <span style="color:#9aedfe">ghp_…OyNa</span>                     custom              1      1    2026-10-25  <span style="opacity:.55">not in current config</span>
+  <span style="color:#f3f99d">MED </span>  Database URL with password          <span style="color:#9aedfe">…azbu</span>                         Claude Code         1      1    2026-10-17  <span style="opacity:.55">not in current config</span>
+  <span style="color:#f3f99d">MED </span>  Anthropic API key                   <span style="color:#9aedfe">sk-ant-api03-E…QDMV</span>           Claude Code         1      1    2026-10-25  <span style="opacity:.55">not in current config</span>
+  <span style="color:#f3f99d">MED </span>  Hugging Face token                  <span style="color:#9aedfe">hf_…vd11</span>                      Claude Code         1      1    2026-09-26  <span style="opacity:.55">not in current config</span>
+  <span style="color:#f3f99d">MED </span>  AWS access key ID                   <span style="color:#9aedfe">AKIA…F24D</span>                     Codex               1      1    2026-10-25  <span style="opacity:.55">not in current config</span>
+  <span style="color:#f3f99d">MED </span>  OpenRouter key                      <span style="color:#9aedfe">sk-or-v1-…f46d</span>                Gemini CLI          1      1    2026-10-21  <span style="opacity:.55">not in current config</span>
+  <span style="opacity:.55">LOW </span>  Secret-named variable with a value  <span style="color:#9aedfe">…d537</span>                         Claude Code         1      1    2026-10-17  <span style="opacity:.55">not in current config</span>
+
+<span style="font-weight:700">  Where (first sighting of each):</span>
+  <span style="opacity:.55">9e23ccf7a4</span>  ~/.claude/projects/-work-api/s1.jsonl<span style="opacity:.55">:3</span>
+  <span style="opacity:.55">3d8630a3d0</span>  ~/.claude/projects/-work-api/s2.jsonl<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">6c84fabfff</span>  ~/.claude/projects/-work-web/s3.jsonl<span style="opacity:.55">:2</span>
+  <span style="opacity:.55">3ff1e973d5</span>  ~/.codex/sessions/2026/10/21/rollout-a.jsonl<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">8c91945163</span>  ~/gateway/litellm.log<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">b6b8e2d547</span>  ~/.claude/projects/-work-api/s2.jsonl<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">2cea0b26f8</span>  ~/.claude/history.jsonl<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">080a82b9bb</span>  ~/.claude/shell-snapshots/snapshot-zsh-1.sh<span style="opacity:.55">:2</span>
+  <span style="opacity:.55">54ab30c3f2</span>  ~/.codex/sessions/2026/10/21/rollout-a.jsonl<span style="opacity:.55">:2</span>
+  <span style="opacity:.55">2bd8640222</span>  ~/.gemini/tmp/abc123/logs.json<span style="opacity:.55">:1</span>
+  <span style="opacity:.55">d174bea80f</span>  ~/.claude/projects/-work-api/s2.jsonl<span style="opacity:.55">:1</span>
+
+<span style="font-weight:700">  Next steps</span>
+  1. <span style="font-weight:700">Rotate first</span>, scrub second: anything that ever sat in a transcript may also be in a gateway log, a synced memory repo or a backup.
+     <span style="color:#ff6b6b">•</span> GitHub OAuth token (gh CLI): <span style="opacity:.55">gh auth refresh / revoke at github.com/settings/applications</span>
+     <span style="color:#ff6b6b">•</span> OpenAI API key: <span style="opacity:.55">platform.openai.com/api-keys</span>
+     • Private key block: <span style="opacity:.55">regenerate the key pair and remove the old public key everywhere</span>
+     • npm token: <span style="opacity:.55">npmjs.com → Access Tokens</span>
+     • GitHub personal access token: <span style="opacity:.55">github.com/settings/tokens</span>
+     • Database URL with password: <span style="opacity:.55">change the database user password</span>
+     • Anthropic API key: <span style="opacity:.55">console.anthropic.com/settings/keys</span>
+     • Hugging Face token: <span style="opacity:.55">huggingface.co/settings/tokens</span>
+     • AWS access key ID: <span style="opacity:.55">IAM → Security credentials (rotate the key pair)</span>
+     • OpenRouter key: <span style="opacity:.55">openrouter.ai/settings/keys</span>
+     • Secret-named variable with a value: <span style="opacity:.55">rotate at the issuing service</span>
+  2. <span style="font-weight:700">Scrub:</span> <span style="color:#9aedfe">trace-scrub --redact</span> shows what would change; add <span style="color:#9aedfe">--yes</span> to rewrite files (values → [REDACTED:type:fingerprint]).
+  3. <span style="font-weight:700">Stop new leaks:</span> keep tokens out of tool output (no <span style="color:#9aedfe">gh auth token</span>, <span style="color:#9aedfe">env</span>, <span style="color:#9aedfe">cat .env</span> in agent shells);
+     if you run an LLM gateway, turn off response-body logging or pipe it through <span style="color:#9aedfe">trace-scrub --stdin --redact</span>.
+</pre></div>
