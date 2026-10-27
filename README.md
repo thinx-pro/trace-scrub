@@ -92,9 +92,3 @@ It was also run read-only on one real developer machine (about 2,200 Claude Code
 ## License
 
 MIT. If it found something on your machine, a ⭐ helps others find it.
-
----
-
-### 中文说明
-
-**trace-scrub**：扫描 Claude Code、Codex、Gemini CLI、OpenCode、Cline、Aider 的本地会话记录、网关日志和记忆目录，找出已经泄露进去的 API Key 和 token（GitHub gh token、OpenAI、Anthropic、AWS、npm、PyPI、私钥、数据库密码等）。离线运行，零依赖，不打印任何密钥值。按指纹聚合，并标出哪些仍是本机当前在用的凭据（LIVE）。`--redact --yes` 会把文件里的密钥原地替换为 `[REDACTED:类型:指纹]`。背景：LiteLLM 1.107.0 投毒事件中，官方观察到 Claude Code 在某些情况下会把 gh OAuth token 写进响应体，并认为攻击者是从内部网关的日志里拿到这些 token 的（调查仍在进行）。**先轮换，再清理。**
