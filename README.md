@@ -3,6 +3,9 @@
 **Find the API keys and tokens that leaked into your AI agent transcripts, gateway logs and memory folders, then redact them in place.**
 Offline, zero dependencies, values are never printed.
 
+<!-- agent-preflight -->
+> **Also a Claude Code skill.** `trace-scrub` is part of [agent-preflight](https://github.com/thinx-pro/agent-preflight), 16 offline checks for coding agents: `/plugin marketplace add thinx-pro/agent-preflight` then `/plugin install trace-scrub@agent-preflight`, and ask Claude in plain words.
+
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-3c873a) ![deps: 0](https://img.shields.io/badge/dependencies-0-blue) ![license: MIT](https://img.shields.io/badge/license-MIT-lightgrey) ![version](https://img.shields.io/badge/version-0.1.0-orange)
 
 ![trace-scrub output on a demo home directory with fake tokens](assets/demo.png)
